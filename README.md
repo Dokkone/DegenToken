@@ -12,7 +12,7 @@ DegenToken is an ERC20 token built using the OpenZeppelin library. It includes f
 2. [Features](#features)
 3. [Installing](#installing)
 4. [Deployment](#deployment)
-    - [Interacting with the Contract](#interaction-with-the-contract)
+    - [Interacting with the Contract](#interacting-with-the-contract)
 5. [Security Considerations](#security-considerations)
 6. [Help](#help)
 7. [Authors](#authors)
