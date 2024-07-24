@@ -4,7 +4,7 @@ pragma solidity ^0.8.23;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract GameToken is ERC20, Ownable {
+contract DegenToken is ERC20, Ownable {
     
     uint256 public constant REDEMPTION_RATE = 100;  // Rate for redeeming tokens for items
     mapping(address => uint256) public itemsOwned;  // Mapping to track items owned by players
@@ -12,7 +12,7 @@ contract GameToken is ERC20, Ownable {
     
     event LevelUp(address indexed player, uint256 newLevel);
 
-    constructor() ERC20("GameToken", "GT") {
+    constructor() ERC20("DegenToken", "DGN") {
         _mint(msg.sender, 10 * (10 ** uint256(decimals())));  // Initial minting to owner
     }
 
