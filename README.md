@@ -1,4 +1,4 @@
-# Project Title
+# DegenToken
 
 A simple ERC20 token smart contract with additional features for redeeming items, tracking player levels, and managing token balances.
 
