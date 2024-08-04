@@ -156,10 +156,10 @@ contract DegenToken is ERC20, Ownable {
      ```
 
 3. **Redeem Tokens:**
-   - Function: `redeemItem(uint256 quantity)`
+   - Function: `redeemItem(uint256 itemId, uint256 quantity)`
    - Example:
      ```sh
-     redeemItems(2)
+     redeemItems(0, 1)
      ```
 
 4. **Check Balance:**
