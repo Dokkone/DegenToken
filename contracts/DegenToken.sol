@@ -1,28 +1,43 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.23;
+pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract DegenToken is ERC20, Ownable {
-    
-    uint256 public constant REDEMPTION_RATE = 100;  // Rate for redeeming tokens for items
+
+    struct Item {
+        string name;
+        uint256 price;
+    }
+
+    Item[] public items;  // Array to store items
+
     mapping(address => uint256) public itemsOwned;  // Mapping to track items owned by players
     mapping(address => uint256) public playerLevels; // Mapping to track player levels
-    
-    event LevelUp(address indexed player, uint256 newLevel);
 
-    constructor() ERC20("DegenToken", "DGN") {
+    event LevelUp(address indexed player, uint256 newLevel);
+    event ItemRedeemed(address indexed player, string itemName, uint256 quantity);
+
+    constructor() ERC20("DegenToken", "DGN")  Ownable(msg.sender)  {
         _mint(msg.sender, 10 * (10 ** uint256(decimals())));  // Initial minting to owner
+
+        // Add items to the store
+        items.push(Item("Sword", 100));
+        items.push(Item("Shield", 150));
+        items.push(Item("Potion", 50));
     }
 
     // Function for players to redeem tokens for items
-    function redeemItem(uint256 quantity) public {
-        uint256 cost = REDEMPTION_RATE * quantity;
-        require(balanceOf(msg.sender) >= cost, "Not enough tokens to redeem for an item");
+    function redeemItem(uint256 itemId, uint256 quantity) public {
+        require(itemId < items.length, "Invalid item ID");
+        Item memory item = items[itemId];
+        uint256 cost = item.price * quantity;
+        require(balanceOf(msg.sender) >= cost, "Not enough tokens to redeem for item");
 
         itemsOwned[msg.sender] += quantity;
         _burn(msg.sender, cost);
+        emit ItemRedeemed(msg.sender, item.name, quantity);
     }
 
     // Function to check the number of items owned by a player
@@ -70,5 +85,10 @@ contract DegenToken is ERC20, Ownable {
     // Function to get the level of a player
     function getPlayerLevel(address player) public view returns (uint256) {
         return playerLevels[player];
+    }
+
+    // Function to get the list of items available for redemption
+    function getItems() public view returns (Item[] memory) {
+        return items;
     }
 }
